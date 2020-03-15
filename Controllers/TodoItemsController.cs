@@ -1,4 +1,7 @@
-using Microsoft.AspNetCore.Mvc
+using Microsoft.AspNetCore.Mvc;
+using System;
+using Todo.Api.Services;
+using System.Collections.Generic;
 
 namespace Todo.Api.Controllers
 {
@@ -6,14 +9,20 @@ namespace Todo.Api.Controllers
     [Route("api/todos")]
     public class TodoItemsController : ControllerBase
     {
+        private ITodoRepository repository;
+        public TodoItemsController(ITodoRepository todoRepository)
+        { 
+            repository = todoRepository ??
+                throw new ArgumentNullException(nameof(todoRepository));
+        }
         [HttpGet]
         public IActionResult GetTodos()
         {
-            var result = new List<TodoItem>(){
-                new TodoItem { Id = 1, Action="Thing one.", IsDone=true},
-                new TodoItem { ID = 2, Action="Thing two.", IsDone =false},
-            };
-
+            var result = repository.GetAllTodoItems();
+            if (result = null)
+            {
+                return NotFound();
+            }
             return Ok(result);
         }
     }
