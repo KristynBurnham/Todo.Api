@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using Todo.Api.Services;
-using System.Collections.Generic;
 
 namespace Todo.Api.Controllers
 {
@@ -19,7 +18,7 @@ namespace Todo.Api.Controllers
         public IActionResult GetTodos()
         {
             var result = repository.GetAllTodoItems();
-            if (result = null)
+            if (result == null)
             {
                 return NotFound();
             }
